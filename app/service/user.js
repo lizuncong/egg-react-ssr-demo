@@ -6,22 +6,19 @@ class UserService {
   async list(pageNum, pageSize, where) {
     const ctx = this.ctx;
     return {
-      "code": 0,
-      "data": {
-        "list": [
-          {
-            "id": 27,
-            "userName": "张三6",
-            "password": "123456",
-            "phone": "18812345676",
-            "gender": "1",
-            "avatar": null,
-            "createdAt": "2021-02-14T04:01:57.000Z",
-            "updatedAt": "2021-02-14T04:01:57.000Z"
-          }
-        ],
-        "count": 5
-      }
+      "list": [
+        {
+          "id": 27,
+          "userName": "张三6",
+          "password": "123456",
+          "phone": "18812345676",
+          "gender": "1",
+          "avatar": null,
+          "createdAt": "2021-02-14T04:01:57.000Z",
+          "updatedAt": "2021-02-14T04:01:57.000Z"
+        }
+      ],
+      "count": 5
     }
   }
   async create(entity) {

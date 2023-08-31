@@ -5,22 +5,19 @@ class ProductService {
   async list(pageNum, pageSize, where) {
     const ctx = this.ctx;
     return {
-      "code": 0,
-      "data": {
-        "list": [
-          {
-            "id": 43,
-            "name": "隆江猪脚饭23",
-            "price": 202,
-            "image": "http://localhost:7001/public/imgs/default-01.png",
-            "status": "1",
-            "description": "猪脚肥而不腻2",
-            "createdAt": "2021-02-14T08:24:09.000Z",
-            "updatedAt": "2021-02-14T08:44:21.000Z"
-          }
-        ],
-        "count": 5
-      }
+      "list": [
+        {
+          "id": 43,
+          "name": "隆江猪脚饭23",
+          "price": 202,
+          "image": "http://localhost:7001/public/imgs/default-01.png",
+          "status": "1",
+          "description": "猪脚肥而不腻2",
+          "createdAt": "2021-02-14T08:24:09.000Z",
+          "updatedAt": "2021-02-14T08:44:21.000Z"
+        }
+      ],
+      "count": 5
     }
   }
   async create(entity) {

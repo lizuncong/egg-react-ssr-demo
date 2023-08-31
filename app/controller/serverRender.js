@@ -6,7 +6,7 @@ class Index extends Controller {
   async render() {
     const { ctx, app } = this;
     const isLocal = app.config.env === 'local';
-    const serverEntryPath = path.resolve(__dirname, '../../../dist/server-entry.js');
+    const serverEntryPath = path.resolve(__dirname, '../../dist/server-entry.js');
     const context = { test: '服务端渲染时，react组件会接收到这个context' }; // 传递给StaticRouter的context
 
     if (isLocal) {
