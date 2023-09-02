@@ -1,0 +1,22 @@
+{
+    "1": {
+        "id": "1",
+        "name": "隆江猪脚饭23",
+        "price": 202,
+        "image": "/public/imgs/default-01.png",
+        "status": "1",
+        "description": "猪脚肥而不腻2",
+        "createdAt": "2021-02-14T08:24:09.000Z",
+        "updatedAt": "2021-02-14T08:44:21.000Z"
+    },
+    "2": {
+        "id": "2",
+        "name": "炒粉",
+        "price": 15,
+        "image": "/public/imgs/default-01.png",
+        "status": "1",
+        "description": "炒粉",
+        "createdAt": "2023-02-14T08:24:09.000Z",
+        "updatedAt": "2023-02-14T08:44:21.000Z"
+    }
+}
