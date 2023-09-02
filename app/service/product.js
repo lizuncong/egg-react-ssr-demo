@@ -6,12 +6,12 @@ const { v4: uuidv4 } = require('uuid');
 class ProductService extends BaseService {
   constructor(...args) {
     super(...args);
-    this.productJsonFilePath = path.resolve(__dirname, '../../storage/product.json')
+    this.jsonFilePath = path.resolve(__dirname, '../../storage/product.json')
   }
   async list(pageNum, pageSize, where) {
     const ctx = this.ctx;
-    const productJson = await this.readJSONFromFile(this.productJsonFilePath)
-    const list = Object.values(productJson)
+    const jsonData = await this.readJSONFromFile(this.jsonFilePath)
+    const list = Object.values(jsonData)
     return {
       list,
       count: list.length
@@ -19,9 +19,9 @@ class ProductService extends BaseService {
   }
   async create(entity) {
     const { name, price, description } = entity;
-    const productJson = await this.readJSONFromFile(this.productJsonFilePath)
+    const jsonData = await this.readJSONFromFile(this.jsonFilePath)
     const id = uuidv4();
-    productJson[id] = {
+    jsonData[id] = {
       image: "/public/imgs/default-01.png",
       status: 1,
       id,
@@ -31,8 +31,8 @@ class ProductService extends BaseService {
       updatedAt: new Date(),
       createdAt: new Date()
     }
-    await this.writeJSONToFile(this.productJsonFilePath, productJson)
-    return productJson[id]
+    await this.writeJSONToFile(this.jsonFilePath, jsonData)
+    return jsonData[id]
   }
   async update(entity) {
     const {
@@ -45,30 +45,30 @@ class ProductService extends BaseService {
       createdAt,
       updatedAt
     } = entity;
-    const productJson = await this.readJSONFromFile(this.productJsonFilePath)
-    const data = productJson[id];
+    const jsonData = await this.readJSONFromFile(this.jsonFilePath)
+    const data = jsonData[id];
     if (!data) {
       console.log('update error，商品不存在, id:', id)
       return null;
     }
-    productJson[id] = {
+    jsonData[id] = {
       ...entity,
       updatedAt: new Date()
     };
-    await this.writeJSONToFile(this.productJsonFilePath, productJson)
-    return productJson[id]
+    await this.writeJSONToFile(this.jsonFilePath, jsonData)
+    return jsonData[id]
   }
 
   async destroy(id) {
     const ctx = this.ctx;
-    const productJson = await this.readJSONFromFile(this.productJsonFilePath)
-    const data = productJson[id]
+    const jsonData = await this.readJSONFromFile(this.jsonFilePath)
+    const data = jsonData[id]
     if (!data) {
       console.log('删除失败，商品不存在。id：', id)
       return;
     }
-    delete productJson[id]
-    await this.writeJSONToFile(this.productJsonFilePath, productJson)
+    delete jsonData[id]
+    await this.writeJSONToFile(this.jsonFilePath, jsonData)
 
     return data
   }

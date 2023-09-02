@@ -1,9 +1,13 @@
 'use strict';
 const BaseService = require('./base');
+const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 
-
-class UserService {
-
+class UserService extends BaseService {
+  constructor(...args) {
+    super(...args);
+    this.jsonFilePath = path.resolve(__dirname, '../../storage/user.json')
+  }
   async list(pageNum, pageSize, where) {
     const ctx = this.ctx;
     return {
