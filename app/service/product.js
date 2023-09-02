@@ -1,85 +1,76 @@
 'use strict';
-const fs = require('fs')
+const BaseService = require('./base');
+const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 
-const writeFile = (path, data) => {
-  return new Promise((resolve, reject) => {
-    fs.writeFile(path, data, err => {
-      if (err) {
-        return reject(err)
-      }
-      return resolve()
-    })
-  })
-}
-
-class ProductService {
+class ProductService extends BaseService {
+  constructor(...args) {
+    super(...args);
+    this.productJsonFilePath = path.resolve(__dirname, '../../storage/product.json')
+  }
   async list(pageNum, pageSize, where) {
     const ctx = this.ctx;
+    const productJson = await this.readJSONFromFile(this.productJsonFilePath)
+    const list = Object.values(productJson)
     return {
-      "list": [
-        {
-          "id": 43,
-          "name": "隆江猪脚饭23",
-          "price": 202,
-          "image": "http://localhost:7001/public/imgs/default-01.png",
-          "status": "1",
-          "description": "猪脚肥而不腻2",
-          "createdAt": "2021-02-14T08:24:09.000Z",
-          "updatedAt": "2021-02-14T08:44:21.000Z"
-        }
-      ],
-      "count": 5
+      list,
+      count: list.length
     }
   }
   async create(entity) {
-    // entity: { name: 'fdaf', price: '434', description: 'ff' }
-    return {
-      "image": "http://localhost:7001/public/imgs/default-01.png",
-      "status": 1,
-      "id": 59,
-      "name": "444",
-      "price": "455",
-      "description": "fff",
-      "updatedAt": "2023-08-31T14:44:23.997Z",
-      "createdAt": "2023-08-31T14:44:23.997Z"
+    const { name, price, description } = entity;
+    const productJson = await this.readJSONFromFile(this.productJsonFilePath)
+    const id = uuidv4();
+    productJson[id] = {
+      image: "/public/imgs/default-01.png",
+      status: 1,
+      id,
+      name,
+      price,
+      description,
+      updatedAt: new Date(),
+      createdAt: new Date()
     }
+    await this.writeJSONToFile(this.productJsonFilePath, productJson)
+    return productJson[id]
   }
   async update(entity) {
-    // entity : {
-    // id: 43,
-    // name: '隆江猪脚饭23',
-    // price: '20244',
-    // image: 'http://localhost:7001/public/imgs/default-01.png',
-    // status: '1',
-    // description: '猪脚肥而不腻2',
-    // createdAt: '2021-02-14T08:24:09.000Z',
-    // updatedAt: '2021-02-14T08:44:21.000Z'
-    // }
-    return {
-      "id": 45,
-      "name": "螺狮粉",
-      "price": "1000",
-      "image": "http://localhost:7001/public/imgs/default-01.png",
-      "status": "1",
-      "description": "螺狮粉没有螺狮",
-      "createdAt": "2021-02-14T08:37:59.000Z",
-      "updatedAt": "2023-08-31T14:44:52.716Z"
+    const {
+      id,
+      name,
+      price,
+      image,
+      status,
+      description,
+      createdAt,
+      updatedAt
+    } = entity;
+    const productJson = await this.readJSONFromFile(this.productJsonFilePath)
+    const data = productJson[id];
+    if (!data) {
+      console.log('update error，商品不存在, id:', id)
+      return null;
     }
+    productJson[id] = {
+      ...entity,
+      updatedAt: new Date()
+    };
+    await this.writeJSONToFile(this.productJsonFilePath, productJson)
+    return productJson[id]
   }
 
   async destroy(id) {
     const ctx = this.ctx;
-    const idTemp = Number(id);
-    return {
-      "id": 43,
-      "name": "隆江猪脚饭23",
-      "price": 20244,
-      "image": "http://localhost:7001/public/imgs/default-01.png",
-      "status": "1",
-      "description": "猪脚肥而不腻2",
-      "createdAt": "2021-02-14T08:24:09.000Z",
-      "updatedAt": "2023-08-31T14:46:08.000Z"
+    const productJson = await this.readJSONFromFile(this.productJsonFilePath)
+    const data = productJson[id]
+    if (!data) {
+      console.log('删除失败，商品不存在。id：', id)
+      return;
     }
+    delete productJson[id]
+    await this.writeJSONToFile(this.productJsonFilePath, productJson)
+
+    return data
   }
 }
 

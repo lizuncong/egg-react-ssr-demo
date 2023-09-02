@@ -7,8 +7,6 @@
     "declarations": true
   },
   "dependencies": {
-    "egg": "^3",
-    "egg-scripts": "^2",
     "@ant-design/icons": "^4.4.0",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@loadable/babel-plugin": "^5.12.0",
@@ -23,9 +21,11 @@
     "classnames": "^2.2.6",
     "core-js": "^3.6.4",
     "css-loader": "^3.4.2",
+    "egg": "^3",
     "egg-http-proxy": "^1.0.1",
     "egg-jwt": "^3.1.7",
     "egg-mysql": "^3.0.0",
+    "egg-scripts": "^2",
     "egg-sequelize": "^6.0.0",
     "egg-validate": "^2.0.2",
     "eslint": "^6.8.0",
@@ -62,6 +62,7 @@
     "stylelint-order": "^4.1.0",
     "terser-webpack-plugin": "^2.3.5",
     "url-loader": "^3.0.0",
+    "uuid": "^9.0.0",
     "webpack": "^4.42.0",
     "webpack-cli": "^3.3.11",
     "webpack-merge": "^5.7.3",
