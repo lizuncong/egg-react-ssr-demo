@@ -9,7 +9,7 @@ const Index = memo(({
   <Modal
     wrapClassName={styles.customModal}
     title={title}
-    visible={visible}
+    open={visible}
     onOk={onOk}
     okText={okText}
     cancelText={cancelText}
