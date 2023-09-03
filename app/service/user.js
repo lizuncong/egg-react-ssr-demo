@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 class UserService extends BaseService {
   constructor(...args) {
     super(...args);
-    this.jsonFilePath = path.resolve(__dirname, '../../storage/user.json')
+    this.jsonFilePath = path.resolve(this.storageDir, './user.json')
   }
   async list(pageNum, pageSize, where) {
     const ctx = this.ctx;
