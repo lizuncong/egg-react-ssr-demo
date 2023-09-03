@@ -46,14 +46,21 @@ class Index extends Controller {
     // 本地开发模式时，客户端渲染需要的html文件需要从localhost:8008服务读取
     const { ctx, app } = this;
     const isLocal = app.config.env === 'local';
+    let clientHtml = ''
     if (!isLocal) {
       // 生产环境直接读取dist目录
       let clientHtmlPath = path.resolve(__dirname, '../../dist/web/assets/index.html');
-      return fs.readFileSync(clientHtmlPath).toString()
+      clientHtml = fs.readFileSync(clientHtmlPath).toString()
+    } else {
+      // 开发环境从localhost:8008端口请求
+      const res = await axios.get('http://localhost:8008/public/web/assets/index.html', {})
+      clientHtml = res.data;
     }
-    // 开发环境从localhost:8008端口请求
-    const res = await axios.get('http://localhost:8008/public/web/assets/index.html', {})
-    return res.data;
+
+    return clientHtml.replace('<!-- <div id="server_render_error"></div> -->', `
+      <div class="render_error">服务端渲染出错，当前降级使用客户端渲染</div>
+    `)
+
   }
   async notFound() {
     // 直接重定向前端404
