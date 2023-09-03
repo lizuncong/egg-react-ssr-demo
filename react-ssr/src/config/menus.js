@@ -1,25 +1,24 @@
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+
 const menuList = [
   {
-    title: '系统配置',
-    menuId: '1000',
-    url: '/system',
+    label: '系统配置',
+    key: '/system',
     children: [
       {
-        title: '用户管理',
-        menuId: '1001',
-        url: '/system/user',
+        label: <NavLink to='/system/user'>用户管理</NavLink>,
+        key: '/system/user',
       },
     ],
   },
   {
-    title: '商品管理',
-    menuId: '2000',
-    url: '/product',
+    label: '商品管理',
+    key: '/product',
     children: [
       {
-        title: '商品列表',
-        menuId: '2001',
-        url: '/product/list',
+        label: <NavLink to='/product/list'>商品列表</NavLink>,
+        key: '/product/list',
       },
     ],
   },
