@@ -52,6 +52,7 @@ class ProductService extends BaseService {
       return null;
     }
     jsonData[id] = {
+      ...data,
       ...entity,
       updatedAt: new Date()
     };
