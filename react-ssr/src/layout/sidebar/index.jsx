@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderRoutes } from 'react-router-config';
 import NavLeft from './navLeft';
-import Header from './header';
+import Header from './header/connect';
 import styles from './index.module.less';
 
 class SideBarLayout extends React.Component {

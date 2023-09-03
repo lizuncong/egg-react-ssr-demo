@@ -6,20 +6,20 @@ import styles from './index.module.less';
 class Header extends React.Component {
   constructor(props) {
     super(props);
-    console.log('renderMode====', Cookies.get('renderMode'))
     this.state = {
       userName: 'LZC',
-      renderMode: 'server'
     };
   }
   componentDidMount() {
     const value = Cookies.get('renderMode')
-    this.setState({
+    const { changeMoreValue } = this.props;
+    changeMoreValue({
       renderMode: value
     })
   }
   render() {
-    const { userName, renderMode } = this.state;
+    const { userName } = this.state;
+    const { renderMode } = this.props;
     return (
       <div className={styles.header}>
         <div className={styles.left}>
@@ -33,8 +33,9 @@ class Header extends React.Component {
               value={renderMode}
               style={{ width: 140, margin: '12px' }}
               onChange={(v) => {
-                this.setState({
-                  renderMode: v,
+                const { changeMoreValue } = this.props;
+                changeMoreValue({
+                  renderMode: v
                 })
                 Cookies.set('renderMode', v)
               }}
