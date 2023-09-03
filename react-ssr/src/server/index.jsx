@@ -4,13 +4,15 @@ import { ChunkExtractor } from '@loadable/server';
 import { Provider } from 'react-redux';
 import { matchRoutes } from 'react-router-config';
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
+import { changeMoreValueAction } from 'src/redux/reducer/global/actions.js'
 import { ServerApp } from '../router';
 import { getServerStore } from '../redux/store';
 import Html from './html';
 import routes from '../router/routes';
 
-const renderHtml = async ({ ctx, context }) => {
+const renderHtml = async ({ ctx, context, renderMode }) => {
   console.log('renderHtml...', ctx.url);
+
   const statsFile = path.resolve(__dirname, './web/assets/loadable-stats-web.json');
   // 根据url获取需要渲染的路由，react-router-config是个好东西
   const matchedRoutes = matchRoutes(routes, ctx.url);
@@ -20,6 +22,10 @@ const renderHtml = async ({ ctx, context }) => {
   const route = mRoute.route || {};
 
   const store = getServerStore(ctx);
+
+  store.dispatch(changeMoreValueAction({
+    renderMode
+  }))
 
   const promises = [];
 

@@ -13,9 +13,11 @@ class Header extends React.Component {
   componentDidMount() {
     const value = Cookies.get('renderMode')
     const { changeMoreValue } = this.props;
-    changeMoreValue({
-      renderMode: value
-    })
+    if (value) {
+      changeMoreValue({
+        renderMode: value
+      })
+    }
   }
   render() {
     const { userName } = this.state;
@@ -37,7 +39,8 @@ class Header extends React.Component {
                 changeMoreValue({
                   renderMode: v
                 })
-                Cookies.set('renderMode', v)
+                Cookies.set('renderMode', v, { expires: 1 });//创建有效期为1天的cookie
+                window.location.reload()
               }}
               options={[
                 { value: 'client', label: '客户端渲染模式' },

@@ -10,16 +10,21 @@ class Index extends Controller {
     const isLocal = app.config.env === 'local';
     const serverEntryPath = path.resolve(__dirname, '../../dist/server-entry.js');
     const context = { test: '服务端渲染时，react组件会接收到这个context' }; // 传递给StaticRouter的context
-
+    const renderMode = ctx.cookies.get('renderMode', { signed: false })
     if (isLocal) {
       // 只在开发环境才允许这么做。。。。
       // 本地开发环境下每次刷新的时候清空require服务端文件的缓存，保证服务端与客户端渲染结果一致
       delete require.cache[serverEntryPath];
     }
     const renderHtml = require(serverEntryPath).default;
-
+    if (renderMode === 'client') {
+      // 切换客户端渲染模式
+      const clientHtml = await this.getClientHtml();
+      ctx.body = clientHtml;
+      return;
+    }
     try {
-      const html = await renderHtml({ ctx, context });
+      const html = await renderHtml({ ctx, context, renderMode: 'server' });
 
       // 如果遇到路由中有<Redirect />组件的，react-router-config会往context里面注入action等重定向信息字段
       if (context.action === 'REPLACE') {
@@ -34,9 +39,12 @@ class Index extends Controller {
 
       ctx.body = html;
     } catch (err) {
+      console.log('服务端渲染失败...', err)
       // 降级，当服务端渲染失败时，使用客户端渲染
       const clientHtml = await this.getClientHtml();
-      ctx.body = clientHtml;
+      ctx.body = clientHtml.replace('<!-- <div id="server_render_error"></div> -->', `
+      <div class="render_error">服务端渲染出错，当前降级使用客户端渲染</div>
+    `);
     }
   }
 
@@ -57,10 +65,7 @@ class Index extends Controller {
       clientHtml = res.data;
     }
 
-    return clientHtml.replace('<!-- <div id="server_render_error"></div> -->', `
-      <div class="render_error">服务端渲染出错，当前降级使用客户端渲染</div>
-    `)
-
+    return clientHtml;
   }
   async notFound() {
     // 直接重定向前端404
