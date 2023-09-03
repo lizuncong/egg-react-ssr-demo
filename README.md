@@ -41,6 +41,12 @@ $ npm run build-react
 $ npm start
 ```
 
+如果需要停止服务，则运行：
+
+```bash
+$ npm stop
+```
+
 ### npm scripts
 下面这些命令都是egg脚手架自带的命令
 
