@@ -3,6 +3,7 @@ const BaseService = require('./base');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
+const MAX_LENGTH = 100;
 class ProductService extends BaseService {
   constructor(...args) {
     super(...args);
@@ -20,6 +21,11 @@ class ProductService extends BaseService {
   async create(entity) {
     const { name, price, description } = entity;
     const jsonData = await this.readJSONFromFile(this.jsonFilePath)
+    const list = Object.values(jsonData)
+    if (list.length > MAX_LENGTH) {
+      console.log(`最多只能创建${MAX_LENGTH}条记录`)
+      return
+    }
     const id = uuidv4();
     jsonData[id] = {
       image: "/public/imgs/default-01.png",

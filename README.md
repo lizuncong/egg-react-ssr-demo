@@ -3,7 +3,7 @@
 react服务端渲染demo
 
 ## QuickStart
-由于本项目只是用于熟悉react服务端渲染原理，因此不使用mysql之类的持久化缓存方案，而是使用本地json文件持久化存储。`storage`目录下的json文件就是持久化存储数据用的
+由于本项目只是用于熟悉react服务端渲染原理，因此不使用mysql之类的持久化缓存方案，而是使用本地json文件持久化存储。`storage`目录下的json文件就是持久化存储数据用的。项目限制商品和用户各自最多只能创建100条
 
 ### Development
 
