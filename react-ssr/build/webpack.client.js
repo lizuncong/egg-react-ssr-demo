@@ -75,7 +75,7 @@ const clientConfig = {
     path: outputPath,
     filename: isDev ? '[name].js' : '[name].[chunkhash:8].js',
     chunkFilename: isDev ? '[name].chunk.js' : '[name].[chunkhash:8].chunk.js',
-    publicPath: isDev ? `http://localhost:${devConfig.port}/public/web/assets/` : `http://localhost:${devConfig.eggServicePort}/public/web/assets/`,
+    publicPath: isDev ? `http://localhost:${devConfig.port}/public/web/assets/` : `/public/web/assets/`,
     // publicPath: '/public/web/assets/',
   },
   optimization,
@@ -109,14 +109,14 @@ if (isDev) {
       index: '/public/web/assets/index.html',
     },
     proxy: {
-      '/api': {
-        target: `http://localhost:${devConfig.eggServicePort}`,
-        // secure: false, // 如果请求的网址是https，需要配置secure: false
-        pathRewrite: {
-          // '/server': '',
-        },
-        changeOrigin: true,
-      },
+      // '/api': {
+      //   target: `http://localhost:${devConfig.eggServicePort}`,
+      //   // secure: false, // 如果请求的网址是https，需要配置secure: false
+      //   pathRewrite: {
+      //     // '/server': '',
+      //   },
+      //   changeOrigin: true,
+      // },
     },
     overlay: {
       errors: true,
