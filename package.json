@@ -90,11 +90,10 @@
     "webpack-dev-server": "^3.11.2"
   },
   "engines": {
-    "node": ">=16.0.0 <17.0.0"
+    "node": ">=16.0.0"
   },
   "scripts": {
     "start": "egg-scripts start --daemon --title=egg-server-react-ssr-demo",
-    "start:render": "egg-scripts start --port=$PORT --workers=1 --title=egg-server-react-ssr-demo",
     "stop": "egg-scripts stop --title=egg-server-react-ssr-demo",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
