@@ -3,7 +3,7 @@ FROM node:16.20.2-bullseye-slim
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci --include=dev
+RUN npm ci --include=dev --legacy-peer-deps
 
 COPY . .
 RUN npm run build-react
