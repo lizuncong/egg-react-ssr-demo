@@ -29,6 +29,12 @@ module.exports = appInfo => {
       path.join(appInfo.baseDir, 'dist'),
     ],
   };
+  config.cluster = {
+    listen: {
+      port: Number(process.env.PORT) || 7001,
+      hostname: process.env.HOST || '0.0.0.0',
+    },
+  };
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',

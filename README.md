@@ -1,3 +1,11 @@
+---
+title: Egg React SSR Demo
+sdk: docker
+app_port: 7860
+pinned: false
+license: mit
+---
+
 # react-ssr-demo
 
 react服务端渲染demo

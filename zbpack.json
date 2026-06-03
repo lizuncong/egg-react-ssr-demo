@@ -1,0 +1,4 @@
+{
+  "build_command": "npm ci --include=dev --legacy-peer-deps && npm run build-react",
+  "start_command": "npm run start:prod"
+}
