@@ -1,7 +1,9 @@
 import createAxios from './createAxios';
 
+const getServerBaseURL = () => `http://127.0.0.1:${process.env.PORT || 7001}`;
+
 const serverAxios = (ctx) => createAxios({
-  baseURL: 'http://localhost:7001',
+  baseURL: getServerBaseURL(),
 }, ctx);
 
 const clientAxios = createAxios({
